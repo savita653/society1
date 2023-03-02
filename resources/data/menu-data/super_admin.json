@@ -1,0 +1,42 @@
+{
+  "menu": [
+    {
+      "navheader": "User Management",
+      "slug": ""
+    },
+    {
+      "url": "app/email",
+      "name": "Admins",
+      "icon": "mail",
+      "slug": "app-email"
+    },
+    {
+      "url": "app/chat",
+      "name": "Presenters",
+      "icon": "message-square",
+      "slug": "app-chat"
+    },
+    {
+      "url": "app/todo",
+      "name": "Subscribers",
+      "icon": "check-square",
+      "slug": "app-todo"
+    },
+    {
+      "navheader": "Media",
+      "slug": ""
+    },
+    {
+      "url": "app/calendar",
+      "name": "Events",
+      "icon": "calendar",
+      "slug": "app-calendar"
+    },
+    {
+      "url": "app/kanban",
+      "name": "Videos",
+      "icon": "grid",
+      "slug": "app-kanban"
+    }
+  ]
+}

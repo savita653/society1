@@ -1,0 +1,61 @@
+{
+    "menu": [
+      {
+        "name": "Dashboards",
+        "badge": "2",
+        "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
+        "icon": "home",
+        "slug": "",
+        "submenu": [
+          {
+            "url": "dashboard/analytics",
+            "name": "Analytics",
+            "icon": "circle",
+            "slug": "dashboard-analytics"
+          },
+          {
+            "url": "/",
+            "name": "eCommerce",
+            "icon": "circle",
+            "slug": "dashboard-ecommerce"
+          }
+        ]
+      },
+  
+      {
+        "navheader": "Apps & Pages",
+        "slug": ""
+      },
+      {
+        "url": "app/email",
+        "name": "Email",
+        "icon": "mail",
+        "slug": "app-email"
+      },
+      {
+        "url": "app/chat",
+        "name": "Chat",
+        "icon": "message-square",
+        "slug": "app-chat"
+      },
+      {
+        "url": "app/todo",
+        "name": "Todo",
+        "icon": "check-square",
+        "slug": "app-todo"
+      },
+      {
+        "url": "app/calendar",
+        "name": "Calendar",
+        "icon": "calendar",
+        "slug": "app-calendar"
+      },
+      {
+        "url": "app/kanban",
+        "name": "Kanban",
+        "icon": "grid",
+        "slug": "app-kanban"
+      }
+    ]
+  }
+  

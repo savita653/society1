@@ -1,0 +1,22 @@
+.no-cursor {
+    cursor: default!important;
+}
+
+.cursor-pointer {
+    cursor: pointer!important;
+}
+
+.rl-form-logo {
+    max-width: 300px;
+    width: 100%;
+}
+
+.event-image {
+    object-fit: contain;
+    max-height: 300px;
+}
+
+.text-dark {
+    color: #101010!important;
+}
+
