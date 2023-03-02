@@ -37,6 +37,7 @@
             <td>{{ $house->owners->name }}</td>
             <td>{{ $house->residents->name }}</td>
         </tr>
+        
         @endforeach 
   </table>  
   <td><a href="{{ route('society.index') }}" class="btn btn-primary"> BACK </a></td>
