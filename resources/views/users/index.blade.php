@@ -104,7 +104,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">mobile</label>
-                            <input type="mobile" class="form-control" name="mobile" id="mobile"
+                            <input type="text" class="form-control" name="mobile" id="mobile"
                                 aria-describedby="emailHelp" placeholder="Enter mobile">
                         </div>
                         <div>
@@ -135,7 +135,11 @@
                 <td> {{ $user->name }}</td>
                 <td> {{ $user->email }}</td>
                 <td> {{ $user->mobile }}</td>
-                <td><a href="{{ route('user.edit', $user) }}" class="btn btn-primary"> EDIT </a></td>
+                <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#editModal{{ $user->id }}">
+                        Edit
+                    </button>
+                </td>
                 <td>
                     <form method="POST" action="{{ route('user.delete', $user->id) }}">
                         @csrf
@@ -145,8 +149,100 @@
                     </form>
                 </td>
             </tr>
+
+            {{-- edit user modal --}}
+            <script>
+                $(document).ready(function() {
+                    $('.post_edit').on('click', function() {
+                        $('.name_err1').text('')
+                        $('.email_err1').text('')
+                        $('.mobile_err1').text('')
+
+                        var form = $('#postform1').serialize()
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ route('user.update', $user->id) }}",
+                            data: form,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data) {
+                                if ($.isEmptyObject(data.error)) {
+                                    alert(data.success)
+                                    document.getElementById("postform1").reset();
+                                } else {
+                                    printErrorMsg(data.error);
+                                }
+                            }
+                        });
+
+                        function printErrorMsg(msg) {
+                            $.each(msg, function(key, value) {
+                                console.log(key);
+                                $('.' + key + '_err1').text(value);
+                            });
+                        }
+                    });
+                });
+            </script>
+
+            <!--edit  Modal -->
+            <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="editModal{{ $user->id }}Label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-name" id="editModal{{ $user->id }}Label">Edit User</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" id="postform1">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">name</label>
+                                    <input type="text" class="form-control" name="name" id="name"
+                                        aria-describedby="emailHelp" value="{{ $user->name }}">
+                                </div>
+                                <div>
+                                    <span class="text-danger error-text name_err1"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">email</label>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        aria-describedby="emailHelp" value="{{ $user->email }}">
+                                </div>
+                                <div>
+                                    <span class="text-danger error-text email_err1"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">mobile</label>
+                                    <input type="textbox" class="form-control" name="mobile" id="mobile"
+                                        aria-describedby="emailHelp" value="{{ $user->mobile }}">
+                                </div>
+                                <div>
+                                    <span class="text-danger error-text mobile_err1"></span>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="post_edit btn btn-primary">Edit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- end edit modal --}}
         @endforeach
     </table>
+
+    {{-- delete confirmation popup --}}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script type="text/javascript">
         $('.show_confirm').click(function(event) {
@@ -166,60 +262,5 @@
                     }
                 });
         });
-
-        if ($("#create").length > 0) {
-            $("#create").validate({
-                rules: {
-                    name: {
-                        required: true,
-                        maxlength: 50
-                    },
-                    email: {
-                        required: true,
-                        maxlength: 50,
-                        email: true,
-                    },
-                    mobile: {
-                        required: true,
-                        maxlength: 10
-                    },
-                },
-                messages: {
-                    name: {
-                        required: "Please enter name",
-                        maxlength: "Your name maxlength should be 50 characters long."
-                    },
-                    email: {
-                        required: "Please enter valid email",
-                        email: "Please enter valid email",
-                        maxlength: "The email name should less than or equal to 50 characters",
-                    },
-                    mobile: {
-                        required: "Please enter mobile no.",
-                        maxlength: "Your message name maxlength should be 10 characters long."
-                    },
-                },
-                submitHandler: function(form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $('#submit').html('Please Wait...');
-                    $("#submit").attr("disabled", true);
-                    $.ajax({
-                        url: "{{ route('user.store') }}",
-                        type: "POST",
-                        data: $('#create').serialize(),
-                        success: function(response) {
-                            $('#submit').html('Submit');
-                            $("#submit").attr("disabled", false);
-                            alert('Ajax form has been submitted successfully');
-                            document.getElementById("create").reset();
-                        }
-                    });
-                }
-            })
-        }
     </script>
 @endsection

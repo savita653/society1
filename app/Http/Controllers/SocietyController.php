@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Society;
+use Illuminate\Support\Facades\Validator;
 
 class SocietyController extends Controller
 {
@@ -46,23 +47,35 @@ class SocietyController extends Controller
         return redirect()->route('society.index');
     }
 
-    public function edit(Society $society)
+    // public function edit(Society $society)
+    // {
+
+    //     return view('societies.edit', compact('society'));
+    // }
+
+    public function update(Request $request, $id)
     {
+    
+        $society = Society::findOrFail($id); 
 
-        return view('societies.edit', compact('society'));
-    }
+        $validator = Validator::make($request->all(), [
 
-    public function update(Request $req, Society $society)
-    {
-        $attributes= $req->validate([
-
-            'name' => 'required|max:255|min:3|unique:societies',
+            'name' => 'required|max:255|min:3',
             'description' => 'required|min:3',
         ]);
-
-        $society->update($attributes);
         
-        return redirect()->route('society.index');
+        if ($validator->fails()) {
+            return response()->json([
+                        'error' => $validator->errors()
+                    ]);
+        }
+
+        $society->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return response()->json(['success'=>'society updated successfully']);
     }
 
     public function delete(Society $society)

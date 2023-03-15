@@ -232,7 +232,7 @@ Route::get('users/create', [UserController::class, 'create'])->name('user.create
 Route::post('users/store', [UserController::class, 'store'])->name('user.store');
 
 Route::get('users/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
-Route::post('users/update/{user}', [UserController::class, 'update'])->name('user.update');
+Route::post('users/update/{id}', [UserController::class, 'update'])->name('user.update');
 
 Route::delete('users/{user}', [UserController::class, 'delete'])->name('user.delete');
 
@@ -248,7 +248,7 @@ Route::get('societies/create', [SocietyController::class, 'create'])->name('soci
 Route::post('society/store', [SocietyController::class, 'store'])->name('society.store');
 
 Route::get('societies/{society}/edit', [SocietyController::class, 'edit'])->name('society.edit');
-Route::post('societies/update/{society:id}', [SocietyController::class, 'update'])->name('society.update');
+Route::post('societies/update/{id}', [SocietyController::class, 'update'])->name('society.update');
 
 Route::delete('societies/delete/{society}', [SocietyController::class, 'delete'])->name('society.delete');
 

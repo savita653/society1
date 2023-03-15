@@ -1,4 +1,4 @@
-@extends('layouts/contentLayoutMaster')
+{{-- @extends('layouts/contentLayoutMaster')
 
 @section('title', 'SOCIETIES')
 
@@ -19,5 +19,5 @@
         <input type="submit" value="SAVE" class="btn btn-primary">
     </form>
 </div>
-@endsection
+@endsection --}}
 
